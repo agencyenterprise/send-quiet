@@ -51,6 +51,7 @@ app.command('/sendq', async ({ ack, payload, context, respond, body }) => {
   const senderUserId = payload.user_id;
   const senderUserName = payload.user_name;
   const destUserId = payload.channel_id;
+  const destUserName = payload.channel_name;
   const message = payload.text;
   await saveMessage(senderUserId, senderUserName, destUserId, payload.text);
   

@@ -11,7 +11,7 @@ const homeMessageBlockTemplate = (senderName, message) => {
 				"style": "danger",
 				"text": {
 					"type": "plain_text",
-					"text": "Delete :see_no_evil:",
+					"text": "Delete",
 					"emoji": true
 				}
 			}
@@ -26,20 +26,20 @@ const homePageTemplate = (messages) => {
   
   const homePage = {
     type: "home",
-    blocks: [
-      {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Here's your received messages:"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ]
   };
-  const footerBlock = [
+  const headerBlocks = [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Here's your received messages:"
+      }
+    },
+    {
+      "type": "divider"
+    }
+  ];
+  const footerBlocks = [
 		{
 			"type": "actions",
 			"elements": [
@@ -56,8 +56,7 @@ const homePageTemplate = (messages) => {
 			]
 		}
 	];
-  homePage.blocks = messages;
-  homePage.blocks.push(footerBlock);
+  homePage.blocks = headerBlocks.concat(messages).concat(footerBlocks);
   return homePage;
 }
 

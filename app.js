@@ -24,15 +24,15 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
   
   try {
+    console.log('event.user = ', event.user)
     const fetchedMessages = await fetchUserMessages(event.user);
     
     if (!fetchedMessages || fetchedMessages.length === 0) {
       publishHome(noMessagesHomeTemplate);
     } else {
       const messages = fetchedMessages
-        .map((message) => homeMessageBlockTemplate(message.senderUserName, message.message))      
-      console.log("home: ", JSON.stringify(homePageTemplate(messages)));
-      publishHome(homePageTemplate);
+        .flatMap((message) => homeMessageBlockTemplate(message.senderUserName, message.message))
+      publishHome(homePageTemplate(messages));
     }
   } catch (error) {
     console.error(error.data);

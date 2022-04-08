@@ -6,8 +6,16 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-app.event('app_home_opened', async ({ event, client, context }) => {
+
+
+(async () => {
+  // Start your app
+  await app.start(process.env.PORT || 3000);
+  
+  
+  app.event('app_home_opened', async ({ event, client, context }) => {
   try {
+    console.log('')
     /* view.publish is the method that your app uses to push a view to the Home tab */
     const result = await client.views.publish({
 
@@ -58,11 +66,8 @@ app.event('app_home_opened', async ({ event, client, context }) => {
     console.error(error.data);
   }
 });
-
-(async () => {
-  // Start your app
-  await app.start(process.env.PORT || 3000);
-
+  
+  
   console.log('⚡️ Bolt app is running!');
 })();
 

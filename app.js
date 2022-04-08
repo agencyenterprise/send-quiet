@@ -55,6 +55,12 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   await respond("Message delivered :tada:");
 });
 
+app.action({action_id: 'deletemsg'}, async ({ack, respond, body}) => {
+  ack();
+  console.log('delete action body: ', body);
+  // ?console.log('delete action received: ', value);
+});
+
 (async () => {
   // Start your app
   await app.start(process.env.PORT || 3000);

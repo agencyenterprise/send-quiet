@@ -16,9 +16,9 @@ const fetchUserMessages = async (destUserId) => {
   const dbUrl = buildDbUrl(destUserId);
   const messages = await axios.get(dbUrl);
   const result = messages.data && Object.keys(messages.data)
-    .map((messageId) => messages.data[messageId])
-    .map((message) => {...message, id: message.id})
-  console.log("result = ", result);
+    .map((messageId) => {
+      return {...messages.data[messageId], id: messageId}
+    });
   return result;
 }
 

@@ -24,13 +24,28 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
   
   try {
-    const messages = await fetchUserMessages(event.user);
+    const messages = await fetchUserMessages(event.user)
+  //    .map((message) => homeMessageTemplate(message))
     if (!messages || messages.length === 0) {
       publishHome("No messages for you");
     } else {
       //const messagesBlock = messages.map((message) => homeMessageTemplate(message.sender, message.content));
-      publishHome(homeTemplate);
-    }    
+      publishHome({
+        "type": "home",
+        "blocks": [
+          {
+            "type": "section",
+            "fields": [
+              {
+                "type": "plain_text",
+                "text": JSON.stringify(messages),
+                "emoji": true
+              }
+            ]
+          }
+        ]
+      });
+    }
   } catch (error) {
     console.error(error.data);
   }

@@ -43,12 +43,13 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   // Acknowledge the command request
   ack();
 
+  
+  
   if (payload.channel_name !== 'directmessage') {
     await respond("Sorry, I only work with direct messages for now.");
     return;
   }
   
-  console.log(await client.users.list().members);
   
 //   const senderUserId = payload.user_id;
 //   const senderUserName = payload.user_name;

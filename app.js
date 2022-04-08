@@ -6,7 +6,6 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-
 app.event('app_home_opened', async ({ event, client, context }) => {
   try {
     /* view.publish is the method that your app uses to push a view to the Home tab */
@@ -56,10 +55,9 @@ app.event('app_home_opened', async ({ event, client, context }) => {
     });
   }
   catch (error) {
-    console.error(error);
+    console.error(error.data);
   }
 });
-
 
 (async () => {
   // Start your app
@@ -67,5 +65,7 @@ app.event('app_home_opened', async ({ event, client, context }) => {
 
   console.log('⚡️ Bolt app is running!');
 })();
+
+
 
 

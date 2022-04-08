@@ -2,6 +2,14 @@ const { saveMessage, fetchUserMessages, clearUserMessages } = require('./db.js')
 const { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate } = require("./message-templates.js");
 const { App } = require("@slack/bolt");
 
+var CronJob = require('cron').CronJob;
+var job = new CronJob('* * * * * 1', function() {
+  app.client.conversations.open({
+    
+  })
+}, null, true, 'America/Los_Angeles');
+job.start();
+
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET

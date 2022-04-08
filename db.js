@@ -30,4 +30,12 @@ const clearUserMessages = async (userId) => {
   }
 }
 
+const listUsers = async() {
+  const dbUrl = `${process.env.FIREBASE_URL}/messages/${destUserId}.json`
+  const result = await axios.delete(dbUrl);
+  if (result.status !== 200) {
+    throw new Error("could not clear messages");
+  }
+}
+
 module.exports = { saveMessage, fetchUserMessages, clearUserMessages };

@@ -6,15 +6,16 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-const sendReminder = () => {
-  app.client.conversations.open({
+const sendReminder = async () => {
+  const res = await app.client.conversations.open({
     users: ['U02KYK0R481']
-  }).then((res) => {
-    console.log("res = ", res);
-    app.client.chat.postMessage({
-      channel_id: res.channel.id,
-      text: "Test message"
-    })
+  });
+
+  console.log("res = ", res);
+
+  await app.client.chat.postMessage({
+    channel_id: res.channel.id,
+    text: "Test message"
   })
 }
 

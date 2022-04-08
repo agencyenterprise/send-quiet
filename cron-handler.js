@@ -1,6 +1,7 @@
 const { App } = require("@slack/bolt");
 var CronJob = require('cron').CronJob;
 const axios = require("axios");
+const FormData = require('form-data');
 
 
 const app = new App({
@@ -10,15 +11,12 @@ const app = new App({
 
 const sendReminder = async (userId) => {
   
+  const formData = new FormData();
+  formData.append('token', 'xoxb-2371065813-3367314368900-bhDHNiRsyNQpVEietxieV3IC');
   
+  axios.post("https://slack.com/api/conversations.open?users=U02KYK0R481&pretty=1", formData).then((res) => console.log(res.data));
+
   
-  axios.post("https://slack.com/api/conversations.open?users=U02KYK0R481&pretty=1", {}, {
-    headers: {
-      Authorization: "Bearer xoxb-2371065813-3367314368900-bhDHNiRsyNQpVEietxieV3IC",
-
-    }
-  }).then((res) => console.log(res.data));
-
 //   const res = await app.client.conversations.open({
 //     users: [userId]
 //   });

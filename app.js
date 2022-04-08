@@ -1,11 +1,12 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
 
+import { initializeApp } from "firebase/app";
+
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
-
 
 
 app.event('app_home_opened', async ({ event, client, context }) => {

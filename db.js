@@ -22,4 +22,12 @@ const fetchUserMessages = async (destUserId) => {
   return result;
 }
 
-module.exports = { saveMessage, fetchUserMessages };
+const clearUserMessages = async (userId) => {
+  const dbUrl = buildDbUrl(userId);
+  const result = await axios.delete(dbUrl);
+  console.log("userId = ", userId);
+  console.log("result = " + result.status)
+}
+
+
+module.exports = { saveMessage, fetchUserMessages, clearUserMessages };

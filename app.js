@@ -1,4 +1,4 @@
-const { saveMessage, fetchUserMessages } = require('./db.js');
+const { saveMessage, fetchUserMessages, clearUserMessages } = require('./db.js');
 const { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate } = require("./message-templates.js");
 const { App } = require("@slack/bolt");
 
@@ -55,9 +55,14 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   await respond("Message delivered :tada:");
 });
 
-app.action({action_id: 'clearmsg'}, async ({ack, respond, body}) => {
+app.action({action_id: 'clear'}, async ({ack, respond, body, payload}) => {
   ack();
-  
+  const userId = body?.user?.id;
+  if (!userId) {
+    respond("bad user id");
+  } else {
+    await clearUserMessages(userId);
+  }
 });
 
 (async () => {

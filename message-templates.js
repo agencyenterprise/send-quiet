@@ -38,10 +38,10 @@ const homePageTemplate = (messages) => {
 					"type": "button",
 					"text": {
 						"type": "plain_text",
-						"text": "Clear Them All",
+						"text": "Clear",
 						"emoji": true
 					},
-					"value": "new_configuration",
+          "action_id": "clear",
 					"style": "danger"
 				}
 			]

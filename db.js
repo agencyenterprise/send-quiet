@@ -30,12 +30,15 @@ const clearUserMessages = async (userId) => {
   }
 }
 
-const listUsers = async() {
-  const dbUrl = `${process.env.FIREBASE_URL}/messages/${destUserId}.json`
-  const result = await axios.delete(dbUrl);
+const listUsers = async() => {
+  const dbUrl = `${process.env.FIREBASE_URL}/messages.json?shallow=true`;
+  const result = await axios.get(dbUrl);
   if (result.status !== 200) {
     throw new Error("could not clear messages");
   }
+  const users = Object.keys(result.data);
+  console.log(users);
+  return users;
 }
 
-module.exports = { saveMessage, fetchUserMessages, clearUserMessages };
+module.exports = { saveMessage, fetchUserMessages, clearUserMessages, listUsers };

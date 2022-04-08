@@ -1,4 +1,4 @@
-const { saveMessage, fetchUserMessages, clearUserMessages } = require('./db.js');
+const { saveMessage, fetchUserMessages, clearUserMessages, listUsers } = require('./db.js');
 const { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate } = require("./message-templates.js");
 const { sendReminder } = require('./cron-handler.js');
 const { App } = require("@slack/bolt");
@@ -8,7 +8,8 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-sendReminder();
+sendReminder('U02KYK0R481');
+
 
 app.event('app_home_opened', async ({ event, client, context }) => {
   const publishHome = async (view) => {

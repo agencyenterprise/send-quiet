@@ -58,15 +58,8 @@ const noMessagesHomeTemplate = {
 			"type": "header",
 			"text": {
 				"type": "plain_text",
-				"text": "You didn't receive any messages... :smiling_face_with_tear:",
+				"text": "You have no messages  :smiling_face_with_tear:",
 				"emoji": true
-			}
-		},
-		{
-			"type": "header",
-			"text": {
-				"type": "plain_text",
-				"text": "Check out later!"
 			}
 		}
 	]

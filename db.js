@@ -25,8 +25,9 @@ const fetchUserMessages = async (destUserId) => {
 const clearUserMessages = async (userId) => {
   const dbUrl = buildDbUrl(userId);
   const result = await axios.delete(dbUrl);
-  console.log("userId = ", userId);
-  console.log("result = " + result.status)
+  if (result.status !== 200) {
+    throw new Error("could not clear messages");
+  }
 }
 
 

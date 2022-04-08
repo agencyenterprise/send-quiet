@@ -55,13 +55,17 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   await respond("Message delivered :tada:");
 });
 
-app.action({action_id: 'clear'}, async ({ack, respond, body}) => {
+app.action({action_id: 'clear'}, async ({client, ack, respond, body}) => {
   ack();
-  const userId = body?.user?.id;
+  const userId = body.user.id;
   if (!userId) {
     respond("bad user id");
   } else {
     await clearUserMessages(userId);
+    await client.views.publish({
+      user_id: userId,
+      view: noMessagesHomeTemplate,
+    });
   }
 });
 

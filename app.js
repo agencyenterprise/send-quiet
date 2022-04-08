@@ -39,7 +39,7 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
 });
 
-app.command('/sendq', async ({ ack, payload, context, respond, body }) => {
+app.command('/sendq', async ({ ack, client, payload, context, respond, body }) => {
   // Acknowledge the command request
   ack();
 
@@ -48,14 +48,16 @@ app.command('/sendq', async ({ ack, payload, context, respond, body }) => {
     return;
   }
   
-  const senderUserId = payload.user_id;
-  const senderUserName = payload.user_name;
-  const destUserId = payload.channel_id;
-  const destUserName = payload.channel_name;
-  const message = payload.text;
-  await saveMessage(senderUserId, senderUserName, destUserId, payload.text);
+  console.log(await client.users.list().members);
   
-  await respond("Message delivered.");
+//   const senderUserId = payload.user_id;
+//   const senderUserName = payload.user_name;
+//   const destUserId = payload.channel_id;
+//   const destUserName = payload.channel_name;
+//   const message = payload.text;
+//   await saveMessage(senderUserId, senderUserName, destUserId, payload.text);
+  
+//   await respond("Message delivered.");
 });
 
 (async () => {

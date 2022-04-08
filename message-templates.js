@@ -1,4 +1,4 @@
-const homeMessageTemplate = (message) => {
+const homeMessageTemplate = (sender,message) => {
   return [
     {
 			"type": "section",

@@ -39,12 +39,10 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
 });
 
-app.command('/sendq \@[\w\d]+ ', async ({ ack, client, payload, context, respond, body }) => {
+app.command('/sendq', async ({ ack, client, payload, context, respond, body }) => {
   // Acknowledge the command request
   ack();
 
-  
-  
   payload
   
   if (payload.channel_name !== 'directmessage') {

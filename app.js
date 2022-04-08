@@ -48,34 +48,25 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   }
   
   console.log("payload = '", payload.text, "'");
-  const params = payload.text.match("\s*?\<(.+)?>(.+)");
+  const params = payload.text.match(/\s*?\<@(.+)?>(.+)/);
   
   console.log("params = ", params);
-  if (params !== 3) {
+  if (params.length !== 3) {
     respondWithUsage();
     return;
   }
   
-  const user = params[1].replace(/\|.*/, '');
+  const destUserId = params[1].replace(/\|.*/, '');
   const message = params[2].trim();
   
-  console.log("user = ", user);
+  console.log("user = ", destUserId);
   console.log("message = ", message);
   
-  if (payload.channel_name !== 'directmessage') {
-    await respond("Sorry, I only work with direct messages for now.");
-    return;
-  }
+  const senderUserId = payload.user_id;
+  const senderUserName = payload.user_name;
+  await saveMessage(senderUserId, senderUserName, destUserId, message);
   
-  
-//   const senderUserId = payload.user_id;
-//   const senderUserName = payload.user_name;
-//   const destUserId = payload.channel_id;
-//   const destUserName = payload.channel_name;
-//   const message = payload.text;
-//   await saveMessage(senderUserId, senderUserName, destUserId, payload.text);
-  
-//   await respond("Message delivered.");
+  await respond("Message delivered.");
 });
 
 (async () => {

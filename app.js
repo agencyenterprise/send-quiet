@@ -1,7 +1,6 @@
 // Require the Bolt package (github.com/slackapi/bolt)
+const { saveMessage } = require('./db.js');
 const { App } = require("@slack/bolt");
-
-import { initializeApp } from "firebase/app";
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -43,7 +42,7 @@ app.command('/sendq', async ({ ack, payload, context, respond }) => {
   // Acknowledge the command request
   ack();
 
-  
+  saveMessage("test-user-id", payload);
   
   await respond("test");
 });

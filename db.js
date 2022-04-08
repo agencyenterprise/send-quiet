@@ -1,10 +1,15 @@
-
 const axios = require('axios');
 
-const buildDbUrl = (destUserId) => {
-  process.env.FIREBASE_URL + "/messages/" + destUserId;
+const buildDbUrl = (destUserId) =>
+  process.env.FIREBASE_URL + "/messages/" + destUserId + ".json";
+
+
+const saveMessage = (senderUserId, destUserId, message) => {
+  const dbUrl = buildDbUrl(destUserId);
+  axios.post(dbUrl, {
+    senderUserId,
+    message
+  });
 }
 
-export const saveMessage = (senderUserId, destUserId, message) {
-  axios.post()
-}
+module.exports = { saveMessage };

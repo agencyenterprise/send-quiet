@@ -1,6 +1,6 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { saveMessage, fetchUserMessages } = require('./db.js');
-const { homeMessageTemplate, homeTemplate } = require("./message-templates.js");
+const { homeMessageTemplate, homeTemplate, noMessagesHomeTemplate } = require("./message-templates.js");
 const { App } = require("@slack/bolt");
 
 const app = new App({
@@ -27,7 +27,7 @@ app.event('app_home_opened', async ({ event, client, context }) => {
     const messages = await fetchUserMessages(event.user)
   //    .map((message) => homeMessageTemplate(message))
     if (!messages || messages.length === 0) {
-      publishHome("No messages for you");
+      publishHome(noMessagesHomeTemplate);
     } else {
       //const messagesBlock = messages.map((message) => homeMessageTemplate(message.sender, message.content));
       publishHome({

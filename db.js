@@ -15,8 +15,8 @@ const saveMessage = async (senderUserId, senderUserName, destUserId, message) =>
 const fetchUserMessages = async (destUserId) => {
   const dbUrl = buildDbUrl(destUserId);
   const messages = await axios.get(dbUrl);
-  console.log(messages.data);
-  return Object.keys(messages.data)
+  console.log("messages.data = ", messages.data);
+  return messages.data && Object.keys(messages.data)
     .map((messageId) => messages[messageId])
 }
 

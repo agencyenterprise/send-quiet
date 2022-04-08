@@ -59,4 +59,25 @@ const homeTemplate = (messages) => {
   return headerBlock.concat(messages).concat(footerBlock);
 }
 
-module.exports = { homeMessageTemplate, homeTemplate }
+const noMessagesHomeTemplate = {
+	"type": "home",
+	"blocks": [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "You didn't receive any messages... :smiling_face_with_tear:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Check out later!"
+			}
+		}
+	]
+};
+
+module.exports = { homeMessageTemplate, homeTemplate, noMessagesHomeTemplate }

@@ -38,16 +38,21 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
 });
 
-app.command('/sendq', async ({ ack, payload, context, respond }) => {
+app.command('/sendq', async ({ ack, payload, context, respond, body }) => {
   // Acknowledge the command request
   ack();
 
+  if (payload.channel_name !== 'directmessage') {
+    await respond("Sorry, I only work on direct messages for now.");
+    return;
+  }
+  
   const senderUserId = payload.user_id;
   const destUserId = payload.channel_id;
   const message = payload.text;
-  saveMessage(senderUserId, destUserId, payload);
+  await saveMessage(senderUserId, destUserId, body);
   
-  await respond("test");
+  await respond("Message delivered.");
 });
 
 (async () => {

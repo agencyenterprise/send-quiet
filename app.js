@@ -55,7 +55,7 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   await respond("Message delivered :tada:");
 });
 
-app.action({action_id: 'clear'}, async ({ack, respond, body, payload}) => {
+app.action({action_id: 'clear'}, async ({ack, respond, body}) => {
   ack();
   const userId = body?.user?.id;
   if (!userId) {

@@ -1,5 +1,6 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { saveMessage } = require('./db.js');
+const { homeMessageTemplate, homeTemplate } = require("./message-templates.js");
 const { App } = require("@slack/bolt");
 
 const app = new App({
@@ -10,8 +11,9 @@ const app = new App({
 
 app.event('app_home_opened', async ({ event, client, context }) => {
     try {
-      console.log('event.user: ', event.user);
-      /* view.publish is the method that your app uses to push a view to the Home tab */
+
+      
+      
       const result = await client.views.publish({
 
         /* the user that opened your app's app home */
@@ -48,9 +50,10 @@ app.command('/sendq', async ({ ack, payload, context, respond, body }) => {
   }
   
   const senderUserId = payload.user_id;
+  const senderUserName = payload.user_name;
   const destUserId = payload.channel_id;
   const message = payload.text;
-  await saveMessage(senderUserId, destUserId, payload.text);
+  await saveMessage(senderUserId, senderUserName, destUserId, payload.text);
   
   await respond("Message delivered.");
 });

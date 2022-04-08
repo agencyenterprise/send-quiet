@@ -3,9 +3,15 @@ const { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate } = r
 const { App } = require("@slack/bolt");
 
 var CronJob = require('cron').CronJob;
-var job = new CronJob('* * * * * 1', function() {
+var job = new CronJob('* * * * * 30', function() {
   app.client.conversations.open({
-    
+    users: ['U02KYK0R481']
+  }).then((res) => {
+    console.log("res = ", res);
+    app.client.chat.postMessage({
+      channel_id: res.channel.id,
+      text: "Test message"
+    })
   })
 }, null, true, 'America/Los_Angeles');
 job.start();

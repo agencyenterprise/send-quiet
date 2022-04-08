@@ -18,6 +18,7 @@ const fetchUserMessages = async (destUserId) => {
   const result = messages.data && Object.keys(messages.data)
     .map((messageId) => messages.data[messageId])
   console.log("result = ", result);
+  return result;
 }
 
 module.exports = { saveMessage, fetchUserMessages };

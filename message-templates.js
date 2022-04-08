@@ -1,4 +1,4 @@
-const homeMessageTemplate = (senderName, message) => {
+const homeMessageBlockTemplate = (senderName, message) => {
   return [
     {
 			"type": "section",
@@ -22,9 +22,9 @@ const homeMessageTemplate = (senderName, message) => {
   ]
 }
 
-const homeTemplate = (messages) => {
+const homePageTemplate = (messages) => {
   
-  const headerBlock = {
+  const homePage = {
     type: "home",
     blocks: [
       {
@@ -56,7 +56,9 @@ const homeTemplate = (messages) => {
 			]
 		}
 	];
-  return headerBlock.concat(messages).concat(footerBlock);
+  homePage.blocks = messages;
+  homePage.blocks.push(footerBlock);
+  return homePage;
 }
 
 const noMessagesHomeTemplate = {
@@ -80,4 +82,4 @@ const noMessagesHomeTemplate = {
 	]
 };
 
-module.exports = { homeMessageTemplate, homeTemplate, noMessagesHomeTemplate }
+module.exports = { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate }

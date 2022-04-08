@@ -1,6 +1,6 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { saveMessage, fetchUserMessages } = require('./db.js');
-const { homeMessageTemplate, homeTemplate, noMessagesHomeTemplate } = require("./message-templates.js");
+const { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate } = require("./message-templates.js");
 const { App } = require("@slack/bolt");
 
 const app = new App({
@@ -24,28 +24,15 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
   
   try {
-    const messages = await fetchUserMessages(event.user)
-      .map((message) => message.senderUserName + message.message)
+    const fetchedMessages = await fetchUserMessages(event.user);
     
-    if (!messages || messages.length === 0) {
+    if (!fetchedMessages || fetchedMessages.length === 0) {
       publishHome(noMessagesHomeTemplate);
     } else {
-      //const messagesBlock = messages.map((message) => homeMessageTemplate(message.sender, message.text));
-      publishHome({
-        "type": "home",
-        "blocks": [
-          {
-            "type": "section",
-            "fields": [
-              {
-                "type": "plain_text",
-                "text": JSON.stringify(messages),
-                "emoji": true
-              }
-            ]
-          }
-        ]
-      });
+      const messages = fetchedMessages
+        .map((message) => homeMessageBlockTemplate(message.senderUserName, message.message))      
+      console.log("home: ", JSON.stringify(homePageTemplate(messages)));
+      publishHome(homePageTemplate);
     }
   } catch (error) {
     console.error(error.data);

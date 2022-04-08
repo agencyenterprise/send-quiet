@@ -30,5 +30,4 @@ const clearUserMessages = async (userId) => {
   }
 }
 
-
 module.exports = { saveMessage, fetchUserMessages, clearUserMessages };

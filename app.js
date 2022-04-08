@@ -25,11 +25,12 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   
   try {
     const messages = await fetchUserMessages(event.user)
-  //    .map((message) => homeMessageTemplate(message))
+      .map((message) => message.senderUserName + message.message)
+    
     if (!messages || messages.length === 0) {
       publishHome(noMessagesHomeTemplate);
     } else {
-      //const messagesBlock = messages.map((message) => homeMessageTemplate(message.sender, message.content));
+      //const messagesBlock = messages.map((message) => homeMessageTemplate(message.sender, message.text));
       publishHome({
         "type": "home",
         "blocks": [

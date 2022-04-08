@@ -43,7 +43,24 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   // Acknowledge the command request
   ack();
 
-  payload
+  const respondWithUsage = () => {
+    respond("Usage: /sendq @user message");
+  }
+  
+  console.log("payload = '", payload.text, "'");
+  const params = payload.text.match("\s*?\<(.+)?>(.+)");
+  
+  console.log("params = ", params);
+  if (params !== 3) {
+    respondWithUsage();
+    return;
+  }
+  
+  const user = params[1].replace(/\|.*/, '');
+  const message = params[2].trim();
+  
+  console.log("user = ", user);
+  console.log("message = ", message);
   
   if (payload.channel_name !== 'directmessage') {
     await respond("Sorry, I only work with direct messages for now.");

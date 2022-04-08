@@ -55,10 +55,9 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
   await respond("Message delivered :tada:");
 });
 
-app.action({action_id: 'deletemsg'}, async ({ack, respond, body}) => {
+app.action({action_id: 'clearmsg'}, async ({ack, respond, body}) => {
   ack();
-  // const value = body?.actions[0]?.value || '';
-  // console.log('delete action received: ', value);
+  
 });
 
 (async () => {
@@ -67,9 +66,4 @@ app.action({action_id: 'deletemsg'}, async ({ack, respond, body}) => {
   
   console.log('⚡️ Bolt app is running!');
 })();
-
-
-
-
-
 

@@ -5,17 +5,6 @@ const homeMessageBlockTemplate = (senderName, message) => {
 			"text": {
 				"type": "mrkdwn",
 				"text": `*@${senderName}*\n${message}`
-			},
-			"accessory": {
-				"type": "button",
-				"style": "danger",
-				"text": {
-					"type": "plain_text",
-					"text": "Delete",
-					"emoji": true
-        },
-        "action_id": "deletemsg",
-        "value": message.id
 			}
 		},
 		{

@@ -42,7 +42,10 @@ app.command('/sendq', async ({ ack, payload, context, respond }) => {
   // Acknowledge the command request
   ack();
 
-  saveMessage("test-user-id", payload);
+  const senderUserId = payload.user_id;
+  const destUserId = payload.channel_id;
+  const message = payload.text;
+  saveMessage(senderUserId, destUserId, payload);
   
   await respond("test");
 });

@@ -13,7 +13,9 @@ const homeMessageBlockTemplate = (senderName, message) => {
 					"type": "plain_text",
 					"text": "Delete",
 					"emoji": true
-				}
+        },
+        "action_id": "deletemsg",
+        "value": message.id
 			}
 		},
 		{

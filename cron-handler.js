@@ -13,20 +13,22 @@ const sendReminder = async (userId) => {
   
   const reminderText = "Hello! You have quiet messages to check! Click on the Home tab above.";
   
-  const formData = new FormData();
+  let formData = new FormData();
   formData.append('token', process.env.SLACK_BOT_TOKEN);
   
-  axios.post(`https://slack.com/api/conversations.open?users=${userId}&pretty=1`, formData, {
+  const resOpen = await axios.post(`https://slack.com/api/conversations.open?users=${userId}&pretty=1`, formData, {
     headers: formData.getHeaders(),
-  }).then((res) => {
-    const data = res.data;
-    if (res.status === 200 && data.ok) {
-      console.log("sending post", data, data.channel.id);
-      axios.post(`https://slack.com/api/chat.postMessage?channel=${data.channel.id}&text=${reminderText}&pretty=1`, formData, {
-        headers: formData.getHeaders(),
-      }).then((res) => console.log(res));
-    }
   });
+  
+  formData = new FormData();
+  formData.append('token', process.env.SLACK_BOT_TOKEN);  
+  const data = resOpen.data;
+  if (resOpen.status === 200 && data.ok) {
+    const res = await axios.post(`https://slack.com/api/chat.postMessage?channel=${data.channel.id}&text=${escape(reminderText)}&pretty=1`, formData, {
+      headers: formData.getHeaders(),
+    });
+    console.log("res = ", res);
+  }
   
 }
 

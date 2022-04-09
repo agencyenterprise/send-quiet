@@ -8,7 +8,7 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-sendReminder('U02KYK0R481');
+
 
 
 app.event('app_home_opened', async ({ event, client, context }) => {

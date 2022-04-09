@@ -11,22 +11,23 @@ const app = new App({
 
 const sendReminder = async (userId) => {
   
+  const reminderText = "Hello! You have quiet messages to check! Click on the Home tab above.";
+  
   const formData = new FormData();
-  formData.append('token', 'xoxb-2371065813-3367314368900-bhDHNiRsyNQpVEietxieV3IC');
+  formData.append('token', process.env.SLACK_BOT_TOKEN);
   
-  axios.post("https://slack.com/api/conversations.open?users=U02KYK0R481&pretty=1", formData).then((res) => console.log(res.data));
-
+  axios.post(`https://slack.com/api/conversations.open?users=${userId}&pretty=1`, formData, {
+    headers: formData.getHeaders(),
+  }).then((res) => {
+    const data = res.data;
+    if (res.status === 200 && data.ok) {
+      console.log("sending post", data, data.channel.id);
+      axios.post(`https://slack.com/api/chat.postMessage?channel=${data.channel.id}&text=${reminderText}&pretty=1`, formData, {
+        headers: formData.getHeaders(),
+      }).then((res) => console.log(res));
+    }
+  });
   
-//   const res = await app.client.conversations.open({
-//     users: [userId]
-//   });
-
-//   console.log("res = ", res);
-
-//   await app.client.chat.postMessage({
-//     channel_id: res.channel.id,
-//     text: "Test message"
-//   })
 }
 
 const job = new CronJob('* * * * * 1', function() {

@@ -2,7 +2,7 @@ const { App } = require("@slack/bolt");
 var CronJob = require('cron').CronJob;
 const axios = require("axios");
 const FormData = require('form-data');
-
+const { listUsers } = require('./db.js');
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -27,13 +27,15 @@ const sendReminder = async (userId) => {
     const res = await axios.post(`https://slack.com/api/chat.postMessage?channel=${data.channel.id}&text=${escape(reminderText)}&pretty=1`, formData, {
       headers: formData.getHeaders(),
     });
-    console.log("res = ", res);
   }
   
 }
 
-const job = new CronJob('* * * * * 1', function() {
-  sendReminder();
+const job = new CronJob('0 0 * * * 0', async () => {
+  const users = await listUsers();
+  users.forEach((user) => {
+    sendReminder(user);
+  })
 }, null, true, 'America/Los_Angeles');
 
 const startJob = () => {

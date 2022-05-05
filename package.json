@@ -10,7 +10,8 @@
     "@slack/bolt": "^1.6.0",
     "axios": "^0.26.1",
     "cron": "^1.8.2",
-    "form-data": "^4.0.0"
+    "form-data": "^4.0.0",
+    "mongodb": "^4.5.0"
   },
   "engines": {
     "node": "11.x"

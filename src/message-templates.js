@@ -1,68 +1,69 @@
 const homeMessageBlockTemplate = (senderName, message) => {
-  return [
-    {
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": `*@${senderName}*\n${message}`
-			}
-		},
-		{
-			"type": "divider"
-		}
-  ]
-}
-
-const homePageTemplate = (messages) => {
-  
-  const homePage = {
-    type: "home",
-  };
-  const headerBlocks = [
-    {
-      "type": "header",
-      "text": {
-        "type": "plain_text",
-        "text": "Here's your received messages:"
-      }
-    },
-    {
-      "type": "divider"
-    }
-  ];
-  const footerBlocks = [
-		{
-			"type": "actions",
-			"elements": [
-				{
-					"type": "button",
-					"text": {
-						"type": "plain_text",
-						"text": "Clear",
-						"emoji": true
-					},
-          "action_id": "clear",
-					"style": "danger"
-				}
-			]
-		}
-	];
-  homePage.blocks = headerBlocks.concat(messages).concat(footerBlocks);
-  return homePage;
-}
-
-const noMessagesHomeTemplate = {
-	"type": "home",
-	"blocks": [
-		{
-			"type": "header",
-			"text": {
-				"type": "plain_text",
-				"text": "You have no messages  :smiling_face_with_tear:",
-				"emoji": true
-			}
-		}
+	return [
+	  {
+			  "type": "section",
+			  "text": {
+				  "type": "mrkdwn",
+				  "text": `*@${senderName}*\n${message}`
+			  }
+		  },
+		  {
+			  "type": "divider"
+		  }
 	]
-};
-
-module.exports = { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate }
+  }
+  
+  const homePageTemplate = (messages) => {
+	
+	const homePage = {
+	  type: "home",
+	};
+	const headerBlocks = [
+	  {
+		"type": "header",
+		"text": {
+		  "type": "plain_text",
+		  "text": "Here's your received messages:"
+		}
+	  },
+	  {
+		"type": "divider"
+	  }
+	];
+	const footerBlocks = [
+		  {
+			  "type": "actions",
+			  "elements": [
+				  {
+					  "type": "button",
+					  "text": {
+						  "type": "plain_text",
+						  "text": "Clear",
+						  "emoji": true
+					  },
+			"action_id": "clear",
+					  "style": "danger"
+				  }
+			  ]
+		  }
+	  ];
+	homePage.blocks = headerBlocks.concat(messages).concat(footerBlocks);
+	return homePage;
+  }
+  
+  const noMessagesHomeTemplate = {
+	  "type": "home",
+	  "blocks": [
+		  {
+			  "type": "header",
+			  "text": {
+				  "type": "plain_text",
+				  //"text": "You have no messages  :smiling_face_with_tear:",
+		  "text": "I'm working on it, please wait a little bit more :)",
+				  "emoji": true
+			  }
+		  }
+	  ]
+  };
+  
+  module.exports = { homeMessageBlockTemplate, homePageTemplate, noMessagesHomeTemplate }

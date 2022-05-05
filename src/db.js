@@ -1,7 +1,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const axios = require('axios').default;
 
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGO_URI
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 const log = (msg) => console.log('[mongo]', msg);
@@ -21,6 +21,7 @@ class Mongo {
         this.db = db;
         this.client = client;
         this.connected = true;
+        return db;
     }
 
     async disconnect() {
@@ -33,5 +34,7 @@ class Mongo {
     }
 }
 
-export const mongo = new Mongo();
-export const connect = mongo.connect();
+const mongo = new Mongo();
+const dbConnection = mongo.connect();
+
+module.exports = { mongo, dbConnection };

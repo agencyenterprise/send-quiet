@@ -4,7 +4,7 @@ const messages = require('./messages.js');
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET
+  signingSecret: process.env.SLACK_BOT_SIGNING_SECRET
 });
 
 app.event('app_home_opened', async ({ event, client, context }) => {
@@ -17,12 +17,10 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   
   try {
     const fetchedMessages = await messages.fetchUserMessages(event.user);
-    
-    if (!fetchedMessages || fetchedMessages.length === 0) {
+    if (!fetchedMessages || !fetchedMessages.length === 0) {
       publishHome(noMessagesHomeTemplate);
     } else {
-      const messages = fetchedMessages
-        .flatMap((message) => homeMessageBlockTemplate(message.senderUserName, message.message))
+      const messages = fetchedMessages.flatMap((message) => homeMessageBlockTemplate(message.senderUserName, message.message));
       publishHome(homePageTemplate(messages));
     }
   } catch (error) {
@@ -55,7 +53,7 @@ app.command('/sendq', async ({ ack, client, payload, context, respond, body }) =
 });
 
 app.action({action_id: 'clear'}, async ({client, ack, respond, body}) => {
-  ack();
+  await ack();
   const userId = body.user.id;
   if (!userId) {
     respond("bad user id");
@@ -68,8 +66,7 @@ app.action({action_id: 'clear'}, async ({client, ack, respond, body}) => {
   }
 });
 
-(async () => {
+module.exports.run = async () => {
   await app.start(process.env.PORT || 3000);
   console.log('⚡️ Bolt app is running!');
-})();
-
+};
